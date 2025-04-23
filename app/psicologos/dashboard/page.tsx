@@ -6,7 +6,7 @@ export default async function dashboard() {
   const session = await auth();
 
   if (!session) {
-    redirect("/project/login");
+    redirect("/psicologos/login");
   }
 
   return (

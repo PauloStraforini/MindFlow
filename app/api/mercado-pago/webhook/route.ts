@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Payment } from "mercadopago";
 import mpClient from "@/lib/mercado-pago";
-import { handleMercadoPagoPayment } from "@/server/mercado-mercdo/handle-payments";
+import { handleMercadoPagoPayment } from "@/server/mercado-mercado/handle-payments";
 
 export async function POST(req: NextRequest) {
     try {

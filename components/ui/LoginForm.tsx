@@ -29,7 +29,7 @@ export default function Login() {
               </p>
             </div>
 
-            <form action={handleAuth} className="space-y-6">
+            <form action={()=> handleAuth ('Google')} className="space-y-6">
               <button
                 type="submit"
                 className="group w-full flex items-center justify-center gap-3 bg-gradient-to-r from-pink-500 via-pink-500 to-purple-500 text-white font-medium py-3 px-6 rounded-2xl shadow-lg shadow-pink-500/20 hover:shadow-xl hover:shadow-pink-500/30 transform hover:-translate-y-0.5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
@@ -42,7 +42,7 @@ export default function Login() {
               </button>
             </form>
 
-            <form action={handleAuth} className="space-y-6 mt-6">
+            <form action={()=> handleAuth ('linkedin')} className="space-y-6 mt-6">
               <button
                 type="submit"
                 className="group w-full flex items-center justify-center gap-3 bg-gradient-to-r from-pink-500 via-pink-500 to-purple-500 text-white font-medium py-3 px-6 rounded-2xl shadow-lg shadow-pink-500/20 hover:shadow-xl hover:shadow-pink-500/30 transform hover:-translate-y-0.5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"

@@ -2,9 +2,9 @@
 import { signIn } from "@/lib/auth";
 
 
-export async function handleAuth() {
+export async function handleAuth( provider: string) {
     
-  await signIn("google, linkedin", {
+  await signIn(provider, {
     redirectTo: "/psicologos/dashboard",
   });
 }

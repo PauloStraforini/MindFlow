@@ -143,7 +143,7 @@ export default async function Page() {
       <div className="min-h-screen flex w-full">
         <Sidebar />
         <SidebarInset>
-          <header className="flex h-16 shrink-0 items-center gap-2 border-b border-pink-100 dark:border-pink-800 px-4 sticky top-0 z-10 backdrop-blur-sm bg-white/80 dark:bg-pink-950/80">
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-pink-100 dark:border-pink-800 px-4 bg-white dark:bg-pink-950/50 sticky top-0 z-10 backdrop-blur-sm bg-white/80 dark:bg-pink-950/80">
             <SidebarTrigger className="-ml-1 text-gray-600 hover:text-pink-600 dark:text-gray-400 dark:hover:text-pink-400" />
             <Separator orientation="vertical" className="mr-2 h-4 bg-pink-200 dark:bg-pink-700" />
             <Breadcrumb>
@@ -170,7 +170,7 @@ export default async function Page() {
                 <CardHeader className="pb-2">
                   <CardTitle className="text-2xl font-bold text-pink-900 dark:text-pink-100">
                     Bem-vindo ao MindFlow, {session?.user?.name ? `Dr. ${session.user.name}` : "Usuário"}
-                  </CardTitle>
+                    </CardTitle>
                   <CardDescription className="text-gray-600 dark:text-gray-300">
                     Aqui está um resumo da sua agenda e atividades recentes
                   </CardDescription>
@@ -189,13 +189,13 @@ export default async function Page() {
 
             {session?.user?.email && (
               <form action={handleSingOut} className="mt-4">
-                <button
-                  className="px-4 py-2 rounded-md bg-pink-600 text-white hover:bg-pink-700 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 dark:focus:ring-offset-pink-900"
-                  type="submit"
-                >
-                  Sair do sistema
-                </button>
-              </form>
+              <button
+                className="px-4 py-2 rounded-md bg-pink-600 text-white hover:bg-pink-700 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 dark:focus:ring-offset-pink-900"
+                type="submit"
+              >
+                Sair do sistema
+              </button>
+            </form>
             )}
           </main>
         </SidebarInset>

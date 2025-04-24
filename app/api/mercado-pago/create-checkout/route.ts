@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
                         description: "",
                         quantity: 1,
                         currency_id: "BRL",
-                        unit_price: 1,
+                        unit_price: 200,
                         category_id: "services",
                     },
                 ],

@@ -169,7 +169,7 @@ export default async function Page() {
               <Card className="w-full md:w-2/3 bg-white dark:bg-pink-900/50 border-pink-100 dark:border-pink-800 hover:shadow-xl transition-shadow">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-2xl font-bold text-pink-900 dark:text-pink-100">
-                    Bem-vindo ao MindFlow, {session?.user?.name ? `Dr. ${session.user.name}` : "Usuário"}
+                    Bem-vindo ao MindFlow, {session?.user?.name ? `${session.user.name}` : "Usuário"}
                     </CardTitle>
                   <CardDescription className="text-gray-600 dark:text-gray-300">
                     Aqui está um resumo da sua agenda e atividades recentes

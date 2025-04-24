@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
-import { useState, useEffect } from "react"
+import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 import {
   Calendar,
   FileText,
@@ -27,71 +27,90 @@ import {
   Sparkles,
   ChevronRight,
   Book,
-} from "lucide-react"
+} from "lucide-react";
 
-import User1 from "@/components/images/user_1.jpg"
-import User2 from "@/components/images/user_2.jpg"
-import User3 from "@/components/images/user_3.jpg"
-import User4 from "@/components/images/user_4.jpg"
+import User1 from "@/components/images/user_1.jpg";
+import User2 from "@/components/images/user_2.jpg";
+import User3 from "@/components/images/user_3.jpg";
+import User4 from "@/components/images/user_4.jpg";
 
-import Apoio from "@/components/images/Psychologist-amico.svg"
-import Logo from "@/components/images/Logo1.png"
-import Chat from "@/components/images/ChatGPT Image 4 de abr. de 2025, 11_26_40.png"
-import Psico from "@/components/images/ChatGPT Image 4 de abr. de 2025, 10_50_38.png"
-import createMercadoPagoChekout from "../hooks/useMercadoPago"
-
+import Apoio from "@/components/images/Psychologist-amico.svg";
+import Logo from "@/components/images/Logo1.png";
+import Chat from "@/components/images/ChatGPT Image 4 de abr. de 2025, 11_26_40.png";
+import Psico from "@/components/images/ChatGPT Image 4 de abr. de 2025, 10_50_38.png";
+import useMercadoPago from "@/hooks/useMercadoPago";
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState("inicio")
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("inicio");
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Handle scroll for navbar transparency effect
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
+      setIsScrolled(window.scrollY > 20);
 
       // Update active section based on scroll position
-      const sections = ["inicio", "funcionalidades", "beneficios", "depoimentos", "precos", "contato"]
+      const sections = [
+        "inicio",
+        "funcionalidades",
+        "beneficios",
+        "depoimentos",
+        "precos",
+        "contato",
+      ];
       for (const section of sections) {
-        const element = document.getElementById(section)
+        const element = document.getElementById(section);
         if (element) {
-          const rect = element.getBoundingClientRect()
+          const rect = element.getBoundingClientRect();
           if (rect.top <= 100 && rect.bottom >= 100) {
-            setActiveSection(section)
-            break
+            setActiveSection(section);
+            break;
           }
         }
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Smooth scroll to section
   const scrollToSection = (sectionId: string) => {
-    setIsMenuOpen(false)
-    const element = document.getElementById(sectionId)
+    setIsMenuOpen(false);
+    const element = document.getElementById(sectionId);
     if (element) {
       window.scrollTo({
         top: element.offsetTop - 80,
         behavior: "smooth",
-      })
+      });
     }
-  }
+  };
+
+  const { createMercadoPagoCheckout } = useMercadoPago();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-50 to-purple-50 text-gray-800 overflow-x-hidden">
       {/* Header */}
       <header
         className={`${
-          isScrolled ? "bg-white/90 backdrop-blur-md shadow-lg border-b border-pink-100" : "bg-transparent"
+          isScrolled
+            ? "bg-white/90 backdrop-blur-md shadow-lg border-b border-pink-100"
+            : "bg-transparent"
         } text-gray-800 sticky top-0 z-50 transition-all duration-300`}
       >
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold flex items-center gap-2 transition-transform hover:scale-105">
-            <Image src={Logo || "/placeholder.svg"} alt="MindFlow Logo" width={80} height={80} className="ml-2" />
+          <Link
+            href="/"
+            className="text-2xl font-bold flex items-center gap-2 transition-transform hover:scale-105"
+          >
+            <Image
+              src={Logo || "/placeholder.svg"}
+              alt="MindFlow Logo"
+              width={80}
+              height={80}
+              className="ml-2"
+            />
             <span className="bg-gradient-to-r from-rose-500 to-purple-800 bg-clip-text text-transparent font-extrabold">
               MindFlow
             </span>
@@ -99,12 +118,21 @@ export default function Home() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
-            {["inicio", "funcionalidades", "beneficios", "depoimentos", "precos", "contato"].map((item) => (
+            {[
+              "inicio",
+              "funcionalidades",
+              "beneficios",
+              "depoimentos",
+              "precos",
+              "contato",
+            ].map((item) => (
               <button
                 key={item}
                 onClick={() => scrollToSection(item)}
                 className={`${
-                  activeSection === item ? "text-pink-600 font-medium" : "text-gray-600"
+                  activeSection === item
+                    ? "text-pink-600 font-medium"
+                    : "text-gray-600"
                 } hover:text-pink-600 transition-colors relative py-1`}
               >
                 {item.charAt(0).toUpperCase() + item.slice(1)}
@@ -116,8 +144,15 @@ export default function Home() {
           </nav>
 
           {/* Mobile Menu Button */}
-          <button className="md:hidden text-pink-600 p-2 focus:outline-none" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          <button
+            className="md:hidden text-pink-600 p-2 focus:outline-none"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
           </button>
 
           {/* CTA Button */}
@@ -127,21 +162,31 @@ export default function Home() {
             </button>
           </Link>
         </div>
-        
 
         {/* Mobile Navigation */}
         <div
           className={`md:hidden absolute w-full bg-white border-b border-pink-100 shadow-lg transition-all duration-300 ease-in-out ${
-            isMenuOpen ? "max-h-screen py-4 opacity-100" : "max-h-0 py-0 opacity-0 overflow-hidden"
+            isMenuOpen
+              ? "max-h-screen py-4 opacity-100"
+              : "max-h-0 py-0 opacity-0 overflow-hidden"
           }`}
         >
           <div className="container mx-auto px-4 flex flex-col space-y-4">
-            {["inicio", "funcionalidades", "beneficios", "depoimentos", "precos", "contato"].map((item) => (
+            {[
+              "inicio",
+              "funcionalidades",
+              "beneficios",
+              "depoimentos",
+              "precos",
+              "contato",
+            ].map((item) => (
               <button
                 key={item}
                 onClick={() => scrollToSection(item)}
                 className={`${
-                  activeSection === item ? "text-pink-600 font-medium" : "text-gray-600"
+                  activeSection === item
+                    ? "text-pink-600 font-medium"
+                    : "text-gray-600"
                 } hover:text-pink-600 transition-colors py-2 text-left`}
               >
                 {item.charAt(0).toUpperCase() + item.slice(1)}
@@ -191,8 +236,8 @@ export default function Home() {
                 </span>
               </h1>
               <p className="text-xl mb-8 text-pink-100 max-w-lg leading-relaxed">
-                Organize sessões, gerencie pacientes e otimize seu tempo com nossa plataforma especializada para
-                psicólogos.
+                Organize sessões, gerencie pacientes e otimize seu tempo com
+                nossa plataforma especializada para psicólogos.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="psicologos/login">
@@ -224,7 +269,8 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="text-sm text-pink-100">
-                  <span className="font-bold text-pink-200 text-end">500+</span> psicólogos já utilizam
+                  <span className="font-bold text-pink-200 text-end">500+</span>{" "}
+                  psicólogos já utilizam
                 </div>
               </div>
             </div>
@@ -255,7 +301,9 @@ export default function Home() {
                   <Calendar className="h-6 w-6 text-pink-500" />
                   <div>
                     <div className="text-xs text-gray-500">Agendamentos</div>
-                    <div className="text-sm font-bold text-pink-700">Simplificados</div>
+                    <div className="text-sm font-bold text-pink-700">
+                      Simplificados
+                    </div>
                   </div>
                 </div>
               </div>
@@ -277,8 +325,9 @@ export default function Home() {
                 Ferramentas poderosas para sua prática clínica
               </h2>
               <p className="text-lg text-gray-600">
-                Nossa plataforma foi desenvolvida especificamente para as necessidades dos psicólogos, com recursos que
-                otimizam seu fluxo de trabalho.
+                Nossa plataforma foi desenvolvida especificamente para as
+                necessidades dos psicólogos, com recursos que otimizam seu fluxo
+                de trabalho.
               </p>
             </div>
 
@@ -287,19 +336,22 @@ export default function Home() {
                 {
                   icon: Calendar,
                   title: "Agendamento inteligente",
-                  description: "Organize suas sessões com facilidade, envie lembretes automáticos e reduza faltas.",
+                  description:
+                    "Organize suas sessões com facilidade, envie lembretes automáticos e reduza faltas.",
                   gradient: "from-blue-400 to-purple-500",
                 },
                 {
                   icon: FileText,
                   title: "Prontuários eletrônicos",
-                  description: "Gerencie prontuários de forma segura, com templates personalizáveis e acesso rápido.",
+                  description:
+                    "Gerencie prontuários de forma segura, com templates personalizáveis e acesso rápido.",
                   gradient: "from-pink-300 to-blue-400",
                 },
                 {
                   icon: Book,
                   title: "Relatórios automáticos",
-                  description: "Gere relatórios personalizados com um clique, economizando horas de trabalho manual.",
+                  description:
+                    "Gere relatórios personalizados com um clique, economizando horas de trabalho manual.",
                   gradient: "from-pink-500 to-purple-500",
                 },
                 {
@@ -312,13 +364,15 @@ export default function Home() {
                 {
                   icon: BookOpen,
                   title: "Recursos terapêuticos",
-                  description: "Acesse uma biblioteca de materiais de apoio, exercícios e recursos especializados.",
+                  description:
+                    "Acesse uma biblioteca de materiais de apoio, exercícios e recursos especializados.",
                   gradient: "from-red-400 to-rose-500",
                 },
                 {
                   icon: Brain,
                   title: "Assistente com IA",
-                  description: "Utilize nossa IA para sugestões de abordagens terapêuticas e análise de padrões.",
+                  description:
+                    "Utilize nossa IA para sugestões de abordagens terapêuticas e análise de padrões.",
                   gradient: "from-rose-300 to-blue-300",
                 },
               ].map((feature, index) => (
@@ -361,7 +415,8 @@ export default function Home() {
                 Uma interface intuitiva para sua prática
               </h2>
               <p className="text-lg text-gray-600">
-                Conheça a plataforma que está transformando a forma como psicólogos gerenciam seus pacientes e sessões.
+                Conheça a plataforma que está transformando a forma como
+                psicólogos gerenciam seus pacientes e sessões.
               </p>
             </div>
 
@@ -379,7 +434,9 @@ export default function Home() {
                 </div>
               </div>
               <div className="order-1 md:order-2">
-                <h3 className="text-2xl font-bold mb-6 text-pink-800">Tudo o que você precisa em um só lugar</h3>
+                <h3 className="text-2xl font-bold mb-6 text-pink-800">
+                  Tudo o que você precisa em um só lugar
+                </h3>
                 <ul className="space-y-4">
                   {[
                     {
@@ -408,7 +465,9 @@ export default function Home() {
                         <Check className="w-4 h-4 text-pink-600" />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-pink-800">{item.title}</h4>
+                        <h4 className="font-semibold text-pink-800">
+                          {item.title}
+                        </h4>
                         <p className="text-gray-600">{item.description}</p>
                       </div>
                     </li>
@@ -424,7 +483,10 @@ export default function Home() {
         </section>
 
         {/* Benefits */}
-        <section id="beneficios" className="py-24 bg-gradient-to-b from-pink-50 to-purple-50 relative">
+        <section
+          id="beneficios"
+          className="py-24 bg-gradient-to-b from-pink-50 to-purple-50 relative"
+        >
           <div className="container mx-auto px-4">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <div className="inline-block px-3 py-1 bg-pink-100 rounded-full text-pink-700 font-medium text-sm mb-4">
@@ -433,9 +495,12 @@ export default function Home() {
                   Benefícios
                 </span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-pink-800">Por que escolher nossa plataforma?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-pink-800">
+                Por que escolher nossa plataforma?
+              </h2>
               <p className="text-lg text-gray-600">
-                Desenvolvida por psicólogos para psicólogos, nossa solução traz benefícios reais para sua prática.
+                Desenvolvida por psicólogos para psicólogos, nossa solução traz
+                benefícios reais para sua prática.
               </p>
             </div>
 
@@ -492,8 +557,12 @@ export default function Home() {
                     <benefit.icon className="w-8 h-8" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold mb-3 text-pink-800">{benefit.title}</h3>
-                    <p className="text-gray-600 leading-relaxed">{benefit.description}</p>
+                    <h3 className="text-xl font-bold mb-3 text-pink-800">
+                      {benefit.title}
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      {benefit.description}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -502,10 +571,26 @@ export default function Home() {
             {/* Stats */}
             <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
               {[
-                { value: "98%", label: "Satisfação dos usuários", color: "from-pink-400 to-pink-500" },
-                { value: "70%", label: "Redução de tarefas administrativas", color: "from-pink-500 to-pink-600" },
-                { value: "5x", label: "Mais produtividade", color: "from-pink-400 to-pink-500" },
-                { value: "24/7", label: "Suporte disponível", color: "from-pink-500 to-pink-600" },
+                {
+                  value: "98%",
+                  label: "Satisfação dos usuários",
+                  color: "from-pink-400 to-pink-500",
+                },
+                {
+                  value: "70%",
+                  label: "Redução de tarefas administrativas",
+                  color: "from-pink-500 to-pink-600",
+                },
+                {
+                  value: "5x",
+                  label: "Mais produtividade",
+                  color: "from-pink-400 to-pink-500",
+                },
+                {
+                  value: "24/7",
+                  label: "Suporte disponível",
+                  color: "from-pink-500 to-pink-600",
+                },
               ].map((stat, index) => (
                 <div
                   key={index}
@@ -516,7 +601,9 @@ export default function Home() {
                   >
                     {stat.value}
                   </div>
-                  <div className="text-gray-600 text-sm md:text-base">{stat.label}</div>
+                  <div className="text-gray-600 text-sm md:text-base">
+                    {stat.label}
+                  </div>
                 </div>
               ))}
             </div>
@@ -533,9 +620,12 @@ export default function Home() {
                   Depoimentos
                 </span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-pink-800">O que os psicólogos estão dizendo?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-pink-800">
+                O que os psicólogos estão dizendo?
+              </h2>
               <p className="text-lg text-gray-600">
-                Centenas de profissionais já transformaram sua prática clínica com nossa plataforma.
+                Centenas de profissionais já transformaram sua prática clínica
+                com nossa plataforma.
               </p>
             </div>
 
@@ -584,7 +674,13 @@ export default function Home() {
                 >
                   <div className="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full border-2 border-gray-100 flex items-center justify-center shadow-md">
                     <div className={`${testimonial.iconColor}`}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
                         <path
                           d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
                           fill="currentColor"
@@ -597,12 +693,16 @@ export default function Home() {
                       <Star
                         key={i}
                         className={`w-5 h-5 ${
-                          i < testimonial.stars ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+                          i < testimonial.stars
+                            ? "fill-yellow-400 text-yellow-400"
+                            : "text-gray-300"
                         }`}
                       />
                     ))}
                   </div>
-                  <p className="text-gray-700 italic mb-6 leading-relaxed">&ldquo;{testimonial.quote}&rdquo;</p>
+                  <p className="text-gray-700 italic mb-6 leading-relaxed">
+                    &ldquo;{testimonial.quote}&rdquo;
+                  </p>
                   <div className="flex items-center">
                     <div className="rounded-full mr-4 border-2 border-white shadow-md overflow-hidden">
                       <Image
@@ -614,8 +714,12 @@ export default function Home() {
                       />
                     </div>
                     <div>
-                      <h3 className="font-bold text-pink-800">{testimonial.name}</h3>
-                      <p className="text-sm text-gray-600">{testimonial.role}</p>
+                      <h3 className="font-bold text-pink-800">
+                        {testimonial.name}
+                      </h3>
+                      <p className="text-sm text-gray-600">
+                        {testimonial.role}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -644,8 +748,9 @@ export default function Home() {
                   Transforme sua prática com tecnologia inteligente
                 </h2>
                 <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                  O MindFlow foi desenvolvido especialmente para profissionais de psicologia, com ferramentas que
-                  facilitam o acompanhamento emocional e o progresso terapêutico dos seus pacientes.
+                  O MindFlow foi desenvolvido especialmente para profissionais
+                  de psicologia, com ferramentas que facilitam o acompanhamento
+                  emocional e o progresso terapêutico dos seus pacientes.
                 </p>
 
                 <div className="space-y-6 mb-8">
@@ -654,10 +759,12 @@ export default function Home() {
                       <Heart className="h-6 w-6 text-pink-600" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-pink-800 text-lg mb-1">Acompanhamento Emocional</h3>
+                      <h3 className="font-bold text-pink-800 text-lg mb-1">
+                        Acompanhamento Emocional
+                      </h3>
                       <p className="text-gray-600">
-                        Visualize e acompanhe as emoções dos seus pacientes com gráficos intuitivos e relatórios
-                        detalhados.
+                        Visualize e acompanhe as emoções dos seus pacientes com
+                        gráficos intuitivos e relatórios detalhados.
                       </p>
                     </div>
                   </div>
@@ -667,10 +774,12 @@ export default function Home() {
                       <Shield className="h-6 w-6 text-pink-600" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-pink-800 text-lg mb-1">Segurança e Privacidade</h3>
+                      <h3 className="font-bold text-pink-800 text-lg mb-1">
+                        Segurança e Privacidade
+                      </h3>
                       <p className="text-gray-600">
-                        Todos os dados são protegidos com criptografia de ponta a ponta, garantindo a confidencialidade
-                        das informações.
+                        Todos os dados são protegidos com criptografia de ponta
+                        a ponta, garantindo a confidencialidade das informações.
                       </p>
                     </div>
                   </div>
@@ -680,10 +789,13 @@ export default function Home() {
                       <Calendar className="h-6 w-6 text-pink-600" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-pink-800 text-lg mb-1">Organização Simplificada</h3>
+                      <h3 className="font-bold text-pink-800 text-lg mb-1">
+                        Organização Simplificada
+                      </h3>
                       <p className="text-gray-600">
-                        Gerencie sua agenda, prontuários e anotações em um único lugar, economizando tempo e aumentando
-                        sua produtividade.
+                        Gerencie sua agenda, prontuários e anotações em um único
+                        lugar, economizando tempo e aumentando sua
+                        produtividade.
                       </p>
                     </div>
                   </div>
@@ -714,7 +826,10 @@ export default function Home() {
         </section>
 
         {/* Pricing */}
-        <section id="precos" className="py-24 bg-gradient-to-b from-pink-50 to-purple-50 relative">
+        <section
+          id="precos"
+          className="py-24 bg-gradient-to-b from-pink-50 to-purple-50 relative"
+        >
           <div className="container mx-auto px-4">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <div className="inline-block px-3 py-1 bg-pink-100 rounded-full text-pink-700 font-medium text-sm mb-4">
@@ -723,9 +838,12 @@ export default function Home() {
                   Preços
                 </span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-pink-800">Planos que cabem no seu bolso</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-pink-800">
+                Planos que cabem no seu bolso
+              </h2>
               <p className="text-lg text-gray-600">
-                Escolha o plano ideal para o seu perfil profissional e comece a transformar sua prática.
+                Escolha o plano ideal para o seu perfil profissional e comece a
+                transformar sua prática.
               </p>
             </div>
 
@@ -733,7 +851,7 @@ export default function Home() {
               {[
                 {
                   name: "Básico",
-                  price: "R$ 49",
+                  price: "R$ 199",
                   period: "/mês",
                   features: [
                     "Agendamento de sessões",
@@ -749,7 +867,7 @@ export default function Home() {
                 },
                 {
                   name: "Profissional",
-                  price: "R$ 99",
+                  price: "R$ 299",
                   period: "/mês",
                   features: [
                     "Tudo do plano Básico",
@@ -761,13 +879,14 @@ export default function Home() {
                   ],
                   popular: true,
                   color: "border-pink-300 hover:border-pink-400",
-                  buttonColor: "bg-gradient-to-r from-pink-400 to-pink-500 hover:from-pink-500 hover:to-pink-600",
+                  buttonColor:
+                    "bg-gradient-to-r from-pink-400 to-pink-500 hover:from-pink-500 hover:to-pink-600",
                   bgColor: "bg-white",
                   shadowColor: "hover:shadow-pink-200/50",
                 },
                 {
                   name: "Premium",
-                  price: "R$ 149",
+                  price: "R$ 350",
                   period: "/mês",
                   features: [
                     "Tudo do plano Profissional",
@@ -785,7 +904,7 @@ export default function Home() {
               ].map((plan, index) => (
                 <div
                   key={index}
-                  className={`${plan.bgColor} p-8 rounded-2xl shadow-xl border-2 ${plan.color} ${plan.shadowColor} transition-all duration-500 hover:-translate-y-3 relative group`}
+                  className={`${plan.bgColor} p-8 rounded-2xl shadow-xl border-2 ${plan.color} ${plan.shadowColor} transition-all duration-500 transform hover:scale-105 relative group`}
                 >
                   {plan.popular && (
                     <div className="absolute -top-5 left-0 right-0 mx-auto w-max">
@@ -796,12 +915,18 @@ export default function Home() {
                   )}
 
                   <div className={`${plan.popular ? "pt-4" : ""}`}>
-                    <h3 className="text-2xl font-bold mb-4 text-pink-800">{plan.name}</h3>
-                    <p className="text-4xl font-bold mb-2 text-pink-800">
+                    <h3 className="text-2xl font-semibold mb-4 text-pink-800 tracking-wide">
+                      {plan.name}
+                    </h3>
+                    <p className="text-3xl font-bold mb-2 text-pink-800">
                       {plan.price}
-                      <span className="text-xl text-gray-600 font-normal">{plan.period}</span>
+                      <span className="text-lg text-gray-600 font-normal">
+                        {plan.period}
+                      </span>
                     </p>
-                    <p className="text-gray-600 mb-8">Cancele a qualquer momento</p>
+                    <p className="text-gray-600 mb-8">
+                      Cancele a qualquer momento
+                    </p>
 
                     <ul className="mb-8 space-y-4">
                       {plan.features.map((feature, featureIndex) => (
@@ -815,11 +940,15 @@ export default function Home() {
                     </ul>
 
                     <button
-                      className={`w-full py-3.5 px-4 rounded-full font-bold text-white ${plan.buttonColor} transition-all duration-300 shadow-lg group-hover:shadow-xl transform group-hover:-translate-y-1 flex items-center justify-center`}
-                      onClick={createMercadoPagoChekout}
+                      className={`${plan.buttonColor} text-white py-2 px-4 rounded-full transition-transform duration-300 ease-in-out hover:scale-105 shadow-md`}
+                      onClick={() =>
+                      createMercadoPagoCheckout({
+                        testeId: "price_12345", // Substitua com o testeId real do plano
+                        userEmail: "aaaaaaaa@teste.com", // Substitua com o email real
+                      })
+                      }
                     >
-                      Assinar Agoraaaaaaaaaaaa
-                      <ArrowRight className="ml-2 h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      Escolher Plano
                     </button>
                   </div>
                 </div>
@@ -828,11 +957,14 @@ export default function Home() {
 
             {/* FAQ */}
             <div className="mt-20 max-w-3xl mx-auto">
-              <h3 className="text-2xl font-bold mb-8 text-center text-pink-800">Perguntas Frequentes</h3>
+              <h3 className="text-2xl font-bold mb-8 text-center text-pink-800">
+                Perguntas Frequentes
+              </h3>
               <div className="space-y-5">
                 {[
                   {
-                    question: "Posso cancelar minha assinatura a qualquer momento?",
+                    question:
+                      "Posso cancelar minha assinatura a qualquer momento?",
                     answer:
                       "Sim, você pode cancelar sua assinatura a qualquer momento sem taxas adicionais. Você continuará tendo acesso até o final do período pago.",
                   },
@@ -842,7 +974,8 @@ export default function Home() {
                       "Oferecemos 7 dias de teste gratuito em todos os planos. Você só será cobrado após esse período se decidir continuar usando nossa plataforma.",
                   },
                   {
-                    question: "A plataforma é segura para dados sensíveis de pacientes?",
+                    question:
+                      "A plataforma é segura para dados sensíveis de pacientes?",
                     answer:
                       "Sim, utilizamos criptografia de ponta a ponta e seguimos todas as normas da LGPD e do CFP para garantir a segurança e privacidade dos dados.",
                   },
@@ -851,8 +984,12 @@ export default function Home() {
                     key={index}
                     className="bg-white p-6 rounded-xl shadow-lg border border-pink-100 hover:border-pink-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                   >
-                    <h4 className="text-lg font-semibold mb-3 text-pink-800">{faq.question}</h4>
-                    <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                    <h4 className="text-lg font-semibold mb-3 text-pink-800">
+                      {faq.question}
+                    </h4>
+                    <p className="text-gray-600 leading-relaxed">
+                      {faq.answer}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -885,10 +1022,13 @@ export default function Home() {
                 Comece Hoje Mesmo
               </span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Pronto para revolucionar sua prática clínica?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Pronto para revolucionar sua prática clínica?
+            </h2>
             <p className="text-xl mb-8 text-pink-800 max-w-2xl mx-auto leading-relaxed">
-              Junte-se a centenas de psicólogos que já transformaram sua forma de trabalhar. Experimente gratuitamente
-              por 7 dias e veja a diferença.
+              Junte-se a centenas de psicólogos que já transformaram sua forma
+              de trabalhar. Experimente gratuitamente por 7 dias e veja a
+              diferença.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="psicologos/login">
@@ -912,10 +1052,14 @@ export default function Home() {
                 <div className="text-sm text-pink-800">Suporte 24/7</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
-                <div className="text-sm text-pink-800">Satisfação Garantida</div>
+                <div className="text-sm text-pink-800">
+                  Satisfação Garantida
+                </div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
-                <div className="text-sm text-pink-800">Cancele Quando Quiser</div>
+                <div className="text-sm text-pink-800">
+                  Cancele Quando Quiser
+                </div>
               </div>
             </div>
           </div>
@@ -923,16 +1067,22 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer id="contato" className="bg-gradient-to-r from-pink-400 via-pink-300 to-purple-300 text-white pt-20 pb-10">
+      <footer
+        id="contato"
+        className="bg-gradient-to-r from-pink-400 via-pink-300 to-purple-300 text-white pt-20 pb-10"
+      >
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Brain className="h-8 w-8 text-pink-800" />
-                <span className="text-2xl font-bold text-pink-800">MindFlow</span>
+                <span className="text-2xl font-bold text-pink-800">
+                  MindFlow
+                </span>
               </div>
               <p className="text-pink-800/80 mb-6 leading-relaxed">
-                Transformando a prática clínica dos psicólogos com tecnologia inovadora.
+                Transformando a prática clínica dos psicólogos com tecnologia
+                inovadora.
               </p>
               <div className="flex space-x-4">
                 {[
@@ -952,9 +1102,17 @@ export default function Home() {
               </div>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-pink-800">Links Rápidos</h4>
+              <h4 className="text-lg font-semibold mb-4 text-pink-800">
+                Links Rápidos
+              </h4>
               <ul className="space-y-3">
-                {["Sobre Nós", "Blog", "Carreiras", "Política de Privacidade", "Termos de Uso"].map((item, index) => (
+                {[
+                  "Sobre Nós",
+                  "Blog",
+                  "Carreiras",
+                  "Política de Privacidade",
+                  "Termos de Uso",
+                ].map((item, index) => (
                   <li key={index}>
                     <Link
                       href="#"
@@ -968,11 +1126,19 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-pink-800">Contato</h4>
+              <h4 className="text-lg font-semibold mb-4 text-pink-800">
+                Contato
+              </h4>
               <ul className="space-y-3 text-pink-800/80">
                 <li className="flex items-center">
                   <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3 border border-pink-200">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
                       <path
                         d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6ZM20 6L12 11L4 6H20ZM20 18H4V8L12 13L20 8V18Z"
                         fill="currentColor"
@@ -983,7 +1149,13 @@ export default function Home() {
                 </li>
                 <li className="flex items-center">
                   <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3 border border-pink-200">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
                       <path
                         d="M20 15.5C18.8 15.5 17.5 15.3 16.4 14.9C16.3 14.9 16.2 14.9 16.1 14.9C15.8 14.9 15.6 15 15.4 15.2L13.2 17.4C10.4 15.9 8 13.6 6.6 10.8L8.8 8.6C9.1 8.3 9.2 7.9 9 7.6C8.7 6.5 8.5 5.2 8.5 4C8.5 3.5 8 3 7.5 3H4C3.5 3 3 3.5 3 4C3 13.4 10.6 21 20 21C20.5 21 21 20.5 21 20V16.5C21 16 20.5 15.5 20 15.5ZM19 12H21C21 7 17 3 12 3V5C15.9 5 19 8.1 19 12ZM15 12H17C17 9.2 14.8 7 12 7V9C13.7 9 15 10.3 15 12Z"
                         fill="currentColor"
@@ -994,7 +1166,13 @@ export default function Home() {
                 </li>
                 <li className="flex items-center">
                   <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3 border border-pink-200">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
                       <path
                         d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z"
                         fill="currentColor"
@@ -1006,7 +1184,9 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-pink-800">Segurança</h4>
+              <h4 className="text-lg font-semibold mb-4 text-pink-800">
+                Segurança
+              </h4>
               <div className="flex flex-col space-y-3">
                 <span className="inline-flex items-center text-pink-800">
                   <Shield className="w-5 h-5 mr-2" />
@@ -1019,7 +1199,9 @@ export default function Home() {
               </div>
               <div className="mt-6 bg-white/20 p-4 rounded-lg border border-pink-200">
                 <h5 className="font-medium mb-2 text-pink-800">Newsletter</h5>
-                <p className="text-sm text-pink-800/80 mb-3">Receba dicas e novidades para psicólogos</p>
+                <p className="text-sm text-pink-800/80 mb-3">
+                  Receba dicas e novidades para psicólogos
+                </p>
                 <div className="flex">
                   <input
                     type="email"
@@ -1035,11 +1217,12 @@ export default function Home() {
           </div>
           <div className="pt-8 border-t border-pink-200 text-center">
             <p className="text-sm text-pink-800">
-              &copy; {new Date().getFullYear()} PsyTech. Todos os direitos reservados.
+              &copy; {new Date().getFullYear()} PsyTech. Todos os direitos
+              reservados.
             </p>
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }

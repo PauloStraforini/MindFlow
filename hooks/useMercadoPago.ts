@@ -1,19 +1,18 @@
-import { useRouter } from "next/navigation"
+'use client' // Garante que este código é executado no cliente
 
+import { useRouter } from "next/navigation";
 
 export default function useMercadoPago() {
-    const router = useRouter()
+    const router = useRouter();
 
-    async function createMercadoPagoChekout({
+    async function createMercadoPagoCheckout({
         testeId,
         userEmail
     }: {
-        testeId: string
-        userEmail?: string
+        testeId: string;
+        userEmail?: string;
     }) {
-
-        try{
-
+        try {
             const response = await fetch("/api/mercado-pago/create-checkout", {
                 method: "POST",
                 headers: {
@@ -23,18 +22,23 @@ export default function useMercadoPago() {
                     testeId,
                     userEmail,
                 }),
-            })
+            });
 
-            const data = await response.json()
-             
-            router.push(data.initPoint)
+            const data = await response.json();
+
+            if (data.initPoint) {
+                router.push(data.initPoint); // Redireciona para o checkout do Mercado Pago
+            } else {
+                console.error("Erro: Não foi possível obter o ponto de inicialização do pagamento.");
+            }
 
         } catch (error) {
-            console.error("Error creating Mercado Pago checkout:", error)
+            console.error("Error creating Mercado Pago checkout:", error);
             throw error;
         }
     }
+
     return {
-        createMercadoPagoChekout
-    }
+        createMercadoPagoCheckout,
+    };
 }

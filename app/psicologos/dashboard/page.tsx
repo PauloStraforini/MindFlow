@@ -12,8 +12,15 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/s
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Calendar, Clock, FileText, Users, TrendingUp, BrainCircuit, CheckCircle2, AlertCircle } from "lucide-react"
+import { auth } from "@/lib/auth"
+ import { redirect } from "next/navigation"
 
-export default function Page() {
+export default async function Page() {
+
+  const session = await auth()
+  if (!session) {
+    redirect("/psicologos/login")
+  }
   // Sample data for the dashboard
   const stats = [
     {
@@ -149,7 +156,7 @@ export default function Page() {
             <Card className="w-full md:w-2/3 bg-white dark:bg-pink-900/50 border-pink-100 dark:border-pink-800">
               <CardHeader className="pb-2">
                 <CardTitle className="text-2xl font-bold text-pink-900 dark:text-pink-100">
-                  Bem-vindo ao MindFlow, Dra. Mariana Takahashi
+                Bem-vindo ao MindFlow, {session?.user?.name ? `${session.user.name}` : "Usuário"}
                 </CardTitle>
                 <CardDescription className="text-gray-600 dark:text-gray-300">
                   Aqui está um resumo da sua agenda e atividades recentes

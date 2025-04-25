@@ -29,16 +29,17 @@ export default function Login() {
               </p>
             </div>
 
-            <form action={()=> handleAuth ('Google')} className="space-y-6">
+            <form action={() => handleAuth('Google')} className="space-y-6">
               <button
-                type="submit"
-                className="group w-full flex items-center justify-center gap-3 bg-gradient-to-r from-pink-500 via-pink-500 to-purple-500 text-white font-medium py-3 px-6 rounded-2xl shadow-lg shadow-pink-500/20 hover:shadow-xl hover:shadow-pink-500/30 transform hover:-translate-y-0.5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+              type="button"
+              onClick={() => handleAuth('Google')}
+              className="group w-full flex items-center justify-center gap-3 bg-gradient-to-r from-pink-500 via-pink-500 to-purple-500 text-white font-medium py-3 px-6 rounded-2xl shadow-lg shadow-pink-500/20 hover:shadow-xl hover:shadow-pink-500/30 transform hover:-translate-y-0.5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
               >
-                <span className="bg-white p-1.5 rounded-lg transform group-hover:scale-110 transition-transform duration-300">
-                  <FcGoogle size={22} />
-                </span>
-                Entrar com Google
-                <ArrowRight className="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
+              <span className="bg-white p-1.5 rounded-lg transform group-hover:scale-110 transition-transform duration-300">
+                <FcGoogle size={22} />
+              </span>
+              Entrar com Google
+              <ArrowRight className="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
               </button>
             </form>
 

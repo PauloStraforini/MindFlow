@@ -4,7 +4,7 @@ import { GrLinkedin  } from "react-icons/gr";
 
 import { ArrowRight } from "lucide-react";
 
-export default function Login() {
+export default function SingIn() {
   return (
     <div className="flex min-h-screen">
       {/* Background com animação gradiente */}
@@ -16,7 +16,6 @@ export default function Login() {
           <div className="mb-8">
 
           </div>
-
           <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-xl shadow-pink-500/10 p-8 md:p-10 transform transition-all duration-500 hover:shadow-2xl hover:shadow-pink-500/20">
             <div className="text-center space-y-3 mb-8">
               <h1 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">

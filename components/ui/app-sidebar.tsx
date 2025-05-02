@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import type * as React from "react"
+import { useState } from "react";
+import type * as React from "react";
 import {
   Brain,
   Calendar,
@@ -13,7 +13,8 @@ import {
   CreditCard,
   PieChart,
   ChevronDown,
-} from "lucide-react"
+  LogOut,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -28,9 +29,15 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
   SidebarFooter,
-} from "@/components/ui/sidebar"
-import { Input } from "@/components/ui/input"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+} from "@/components/ui/sidebar";
+import { Input } from "@/components/ui/input";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+
+import { SingOut } from "@/components/actions/singOut";
 
 // This is sample data.
 const data = {
@@ -52,8 +59,8 @@ const data = {
           isActive: false,
         },
         {
-          title: "Adicionar Paciente",
-          url: "/pacientes/adicionar",
+          title: "Cadastrar Paciente",
+          url: "/psicologos/adicionar-pacientes",
           isActive: false,
         },
         {
@@ -72,7 +79,7 @@ const data = {
           title: "Calendário",
           url: "/psicologos/consultations",
           isActive: false,
-        }
+        },
       ],
     },
     {
@@ -142,22 +149,26 @@ const data = {
       icon: Shield,
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // Track open/closed state for each menu item
-  const [openItems, setOpenItems] = useState<Record<string, boolean>>({})
+  const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
 
   // Toggle open/closed state for a specific menu item
   const toggleItem = (title: string) => {
     setOpenItems((prev) => ({
       ...prev,
       [title]: !prev[title],
-    }))
-  }
+    }));
+  };
+
 
   return (
-    <Sidebar className="border-r border-indigo-100 dark:border-rose-800" {...props}>
+    <Sidebar
+      className="border-r border-indigo-100 dark:border-rose-800"
+      {...props}
+    >
       <SidebarHeader className="pb-0">
         <SidebarMenu>
           <SidebarMenuItem>
@@ -170,7 +181,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <span className="bg-gradient-to-r from-rose-600 to-purple-500 bg-clip-text text-transparent font-extrabold">
                     MindFlow
                   </span>
-                  <span className="text-gray-600 dark:text-gray-400">v1.0.0</span>
+                  <span className="text-gray-600 dark:text-gray-400">
+                    v1.0.0
+                  </span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -199,14 +212,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   >
                     <CollapsibleTrigger className="w-full">
                       <div
-                        className={`flex items-center w-full rounded-md p-2 text-left text-sm gap-2 text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-rose-400 ${item.isActive ? "bg-indigo-50 dark:bg-indigo-900/50 font-medium text-indigo-600 dark:text-indigo-400" : ""}`}
+                        className={`flex items-center w-full rounded-md p-2 text-left text-sm gap-2 text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-rose-400 ${
+                          item.isActive
+                            ? "bg-indigo-50 dark:bg-indigo-900/50 font-medium text-indigo-600 dark:text-indigo-400"
+                            : ""
+                        }`}
                       >
                         {item.icon && (
                           <item.icon className="h-5 w-5 text-gray-500 dark:text-gray-400 group-hover:text-rose-600 dark:group-hover:text-indigo-400" />
                         )}
                         <span className="flex-1">{item.title}</span>
                         <ChevronDown
-                          className={`h-4 w-4 transition-transform ${openItems[item.title] ? "rotate-180" : ""}`}
+                          className={`h-4 w-4 transition-transform ${
+                            openItems[item.title] ? "rotate-180" : ""
+                          }`}
                         />
                       </div>
                     </CollapsibleTrigger>
@@ -247,18 +266,38 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarFooter>
         <div className="p-3">
-          <div className="rounded-lg border border-indigo-100 dark:border-indigo-800 bg-white dark:bg-indigo-950/50 p-3 shadow-sm">
+            <div className="rounded-lg border border-indigo-100 dark:border-indigo-800 bg-white dark:bg-indigo-950/50 p-3 shadow-sm">
+            <div className="flex items-center gap-3">
+              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gradient-to-r from-red-500 to-red-600 text-white">
+              <LogOut className="size-4" />
+              </div>
+              <button
+              onClick={SingOut}
+              className="text-indigo-600 dark:text-red-400 hover:underline cursor-pointer"
+              >
+              <div className="text-sm font-medium text-indigo-900 dark:text-indigo-200">
+                Sair da Conta
+              </div>
+              </button>
+            </div>
+            </div>
+
+          <div className="rounded-lg border mt-3 border-indigo-100 dark:border-indigo-800 bg-white dark:bg-indigo-950/50 p-3 shadow-sm">
             <div className="flex items-center gap-3 mb-2">
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gradient-to-r from-rose-300 to-pink-500 text-white">
                 <Shield className="size-4" />
               </div>
-              <div className="text-sm font-medium text-indigo-900 dark:text-indigo-200">Plano Profissional</div>
+              <div className="text-sm font-medium text-indigo-900 dark:text-indigo-200">
+                Plano Profissional
+              </div>
             </div>
-            <div className="text-xs text-gray-600 dark:text-gray-400">Sua assinatura renova em 15 dias</div>
+            <div className="text-xs text-gray-600 dark:text-gray-400">
+              Sua assinatura renova em 15 dias
+            </div>
           </div>
         </div>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }
